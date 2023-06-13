@@ -114,3 +114,41 @@ root.render(navbar)
 
 //npm installed 
 npm install --save-dev @testing-library/react@latest @testing-library/user-event@latest web-vitals@latest
+
+//repeating React code
+rfce
+
+//console.log('hello its javascript console')
+    //const now=new Date();
+    //console.log(now);
+
+//using props 
+//file name:Bob.js
+import React from 'react';
+function Nag(props) {
+
+    return (
+      <div>
+        <p>Hello,{props.name}</p>
+        //<p>Hello{props.name},her age{props.age}</p>
+      </div>
+    );
+  }
+export default Nag;
+
+//file name:App.js
+import React from 'react';
+import Nag from './components/Bob.js'
+function App() {
+  return (
+    <div>
+    <h1>greetings</h1>
+      <Nag name='elil'/>
+      /* <Nag name='elil' age={10+16}/>
+      <Nag name='elil' age={age}/>*/
+    </div>
+  );
+}
+
+export default App;
+
