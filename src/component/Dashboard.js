@@ -1,121 +1,81 @@
-/*import React from 'react'
-import Card from './Card'
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Card from './Card';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+import { UsersContext } from '../context/UserContextComponent';
+import { DashboardContext } from '../context/DashboardContextComponent';
+
 function Dashboard() {
-    let data = [{
-        title:"Earnings (Monthly)",
-        value:"$5000",
-        color:"primary",
-        icon:"fa-calendar"
-    },
-    {
-        title:"Earnings (Annual)",
-        value:"$60000",
-        color:"success",
-        icon:"fa-dollar-sign"
-    },
-    {
-        title:"Task",
-        value:"90",
-        color:"info",
-        icon:"fa-clipboard-list"
-    },
-    {
-        title:"Pending Request",
-        value:"18",
-        color:"warning",
-        icon:"fa-comments"
-    }
-]
-  return <>
-    <div id="content-wrapper" className="d-flex flex-column">
+  const userContext = useContext(UsersContext);
+  const dashboardContext = useContext(DashboardContext);
+  const navigate = useNavigate();
 
-<div id="content">
+  return (
+    <>
+      <div id="content-wrapper" className="d-flex flex-column">
+        <div id="content">
+          <div className="container-fluid">
+            <div className="d-sm-flex align-items-center justify-content-between mb-4">
+              <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
+              <Button variant="primary" className="d-none d-sm-inline-block">
+                <i className="fas fa-download fa-sm text-white-50"></i> Generate Report
+              </Button>
+            </div>
 
-    <div className="container-fluid">
+            <div className="row">
+              {dashboardContext.data.map((e, i) => (
+                <Card key={i} input={e} value={10} />
+              ))}
+            </div>
 
-        <div className="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
-            <a href="javascript(void)" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    className="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+            <div className="container-fluid">
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>DOB</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {userContext.users.map((e, i) => (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{e.name}</td>
+                      <td>{e.email}</td>
+                      <td>{e.mobile}</td>
+                      <td>{e.dob}</td>
+                      <td>
+                        <Button variant="primary" onClick={() => navigate(`/edit-user/${i}`)}>
+                          Edit
+                        </Button>
+                        &nbsp;&nbsp;
+                        <Button
+                          variant="danger"
+                          onClick={() => {
+                            const newArray = [...userContext.users];
+                            newArray.splice(i, 1);
+                            userContext.setUsers(newArray);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          </div>
         </div>
-
-        <div className="row">
-            {
-                data.map((e,i)=>{
-                    return <Card key={i}
-                     data={e}
-                    />
-                    
-                })
-            }
-        </div>
-
-    </div>
-
-</div>
-
-</div>
-  </>
-}
-export default Dashboard*/
-import React from 'react'
-import Card from './Card'
-function Dashboard() {
-    let data = [{
-        title:"Earnings (Monthly)",
-        value:"$5000",
-        color:"primary",
-        icon:"fa-calendar",
-        isProgress:false
-    },
-    {
-        title:"Earnings (Annual)",
-        value:"$60000",
-        color:"success",
-        icon:"fa-dollar-sign",
-        isProgress:false
-    },
-    {
-        title:"Task",
-        value:"90",
-        color:"info",
-        icon:"fa-clipboard-list",
-        isProgress:true
-    },
-    {
-        title:"Pending Request",
-        value:"18",
-        color:"warning",
-        icon:"fa-comments",
-        isProgress:false
-    }
-]
-  return <>
-         <div id="content-wrapper" className="d-flex flex-column">
-<div id="content">
-    <div className="container-fluid">
-
-        <div className="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
-            <a href="javascript(void)" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    className="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-        </div>
-
-        <div className="row">
-            {
-                data.map((e,i)=>{
-                    return <Card key={i}
-                    input={e}
-                    />
-                })
-            }
-        </div>
-
-    </div>
-
-</div>
-</div>
-  </>
+      </div>
+    </>
+  );
 }
 
-export default Dashboard
+export default Dashboard;
+
